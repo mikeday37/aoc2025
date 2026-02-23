@@ -58,7 +58,7 @@ else:
 
 
 
-input = common.read_input()
+input = common.read_input().splitlines()
 print("part 1: ", count_zeros(input))
 print("part 2: ", count_all_zeroes(input))
 
