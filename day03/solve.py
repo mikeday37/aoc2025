@@ -10,29 +10,23 @@ def pick_best_n_batteries(n, joltages):
         selection += best
     return int(selection)
 
-def solve_part(pick_best_batteries):
-    return sum(pick_best_batteries(line) for line in read_input().splitlines())
+def solve_for_battery_count(n):
+    return sum(pick_best_n_batteries(n, line) for line in read_input().splitlines())
 
-print("Part 1:", solve_part(lambda x: pick_best_n_batteries(2, x)))
-print("Part 2:", solve_part(lambda x: pick_best_n_batteries(12, x)))
+print("Part 1:", solve_for_battery_count(2))
+print("Part 2:", solve_for_battery_count(12))
 
-def pick_best_two_batteries(joltages):
-    return pick_best_n_batteries(2, joltages)
+test(pick_best_n_batteries, 98, 2, "987654321111111")
+test(pick_best_n_batteries, 89, 2, "811111111111119")
+test(pick_best_n_batteries, 78, 2, "234234234234278")
+test(pick_best_n_batteries, 92, 2, "818181911112111")
+test(pick_best_n_batteries, 99, 2, "99")
 
-def pick_best_twelve_batteries(joltages):
-    return pick_best_n_batteries(12, joltages)
+test(pick_best_n_batteries, 811111111119, 12, "811111111111119")
+test(pick_best_n_batteries, 987654321111, 12, "987654321111111")
+test(pick_best_n_batteries, 434234234278, 12, "234234234234278")
+test(pick_best_n_batteries, 888911112111, 12, "818181911112111")
+test(pick_best_n_batteries, 999999999999, 12, "999999999999")
 
-test(pick_best_two_batteries, 98, "987654321111111")
-test(pick_best_two_batteries, 89, "811111111111119")
-test(pick_best_two_batteries, 78, "234234234234278")
-test(pick_best_two_batteries, 92, "818181911112111")
-test(pick_best_two_batteries, 99, "99")
-
-test(pick_best_twelve_batteries, 811111111119, "811111111111119")
-test(pick_best_twelve_batteries, 987654321111, "987654321111111")
-test(pick_best_twelve_batteries, 434234234278, "234234234234278")
-test(pick_best_twelve_batteries, 888911112111, "818181911112111")
-test(pick_best_twelve_batteries, 999999999999, "999999999999")
-
-test(lambda: solve_part(lambda x: pick_best_n_batteries(2, x)), 17383)
-test(lambda: solve_part(lambda x: pick_best_n_batteries(12, x)), 172601598658203)
+test(lambda: solve_for_battery_count(2), 17383)
+test(lambda: solve_for_battery_count(12), 172601598658203)
