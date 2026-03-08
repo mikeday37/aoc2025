@@ -28,5 +28,5 @@ test(pick_best_n_batteries, 434234234278, 12, "234234234234278")
 test(pick_best_n_batteries, 888911112111, 12, "818181911112111")
 test(pick_best_n_batteries, 999999999999, 12, "999999999999")
 
-test(lambda: solve_for_battery_count(2), 17383)
-test(lambda: solve_for_battery_count(12), 172601598658203)
+test(solve_for_battery_count, 17383, 2)
+test(solve_for_battery_count, 172601598658203, 12)
