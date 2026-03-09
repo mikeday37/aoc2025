@@ -9,14 +9,11 @@ def convert_to_roll_set(input: str):
     return rolls
 
 def count_neighboring_rolls(x, y, rolls):
-    n = 0
-    for at_x in range(x - 1, x + 2):
-        for at_y in range(y - 1, y + 2):
-            if at_x == x and at_y == y:
-                continue
-            if (at_x, at_y) in rolls:
-                n += 1
-    return n
+    return sum(
+        not (dx == 0 and dy == 0) and (x + dx, y + dy) in rolls
+        for dx in (-1, 0, 1)
+        for dy in (-1, 0, 1)
+    )
 
 def count_accessible_rolls(rolls):
     return sum(count_neighboring_rolls(x, y, rolls) < 4 for x, y in rolls)
