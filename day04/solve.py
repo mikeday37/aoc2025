@@ -46,7 +46,8 @@ test(count_neighboring_rolls, 4, 1, 0, _example_rolls)
 test(count_neighboring_rolls, 8, 4, 4, _example_rolls)
 
 def count_accessible_rolls(rolls):
-    return sum(1 for x, y in rolls if count_neighboring_rolls(x, y, rolls) < 4)
+#    return sum(1 for x, y in rolls if count_neighboring_rolls(x, y, rolls) < 4)
+    return sum(count_neighboring_rolls(x, y, rolls) < 4 for x, y in rolls)
 
 test(count_accessible_rolls, 13, _example_rolls)
 
@@ -58,3 +59,7 @@ test(solve_part_1, 1445)
 
 print("Part 1:", solve_part_1())
 
+#def count_removable_rolls(rolls):
+ #   state = rolls.copy()
+  #  do:
+    
