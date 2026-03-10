@@ -1,23 +1,10 @@
-import common
-
-test_input_1 = """\
-L68
-L30
-R48
-L5
-R60
-L55
-L1
-L99
-R14
-L82
-""".splitlines()
+from common import *
 
 def parse_turn(s):
     a = int(s[1:])
     return a if s[0] == "R" else -a
 
-def count_zeros(turns):
+def count_zeroes(turns):
     zeroes = 0
     v = 50
     for turn in turns:
@@ -39,37 +26,40 @@ def count_all_zeroes(turns):
         v = (v + amount) % 100
     return zeroes
 
-if count_zeros(test_input_1) == 3:
-    print("TEST 1 PASS")
-else:
-    print("!! FAIL 1 !!")
-
-if count_all_zeroes(test_input_1) == 6:
-    print("TEST 2 PASS")
-else:
-    print("!! FAIL 2 !!", count_all_zeroes(test_input_1))
-
-test_input_2 = ["R1000"]
-
-if count_all_zeroes(test_input_2) == 10:
-    print("TEST 3 PASS")
-else:
-    print("!! FAIL 3 !!")
-
-
-
-input = common.read_input().splitlines()
-print("part 1: ", count_zeros(input))
+input = read_input().splitlines()
+print("part 1: ", count_zeroes(input))
 print("part 2: ", count_all_zeroes(input))
 
-print("a ", count_all_zeroes(["R50"]))
-print("a ", count_all_zeroes(["R1000"]))
-print("a ", count_all_zeroes(["R100"]))
-print("a ", count_all_zeroes(["R150"]))
-print("a ", count_all_zeroes(["L50"]))
-print("a ", count_all_zeroes(["L150"]))
-print("a ", count_all_zeroes(["L200"]))
-print("a ", count_all_zeroes(["L0"]))
-print("a ", count_all_zeroes(["R0"]))
-print("------------")
-print("a ", count_all_zeroes(["L49","L1"]))
+
+# ==== Tests ====
+
+test_input = """\
+L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82
+""".splitlines()
+
+test(count_zeroes, 3, test_input)
+test(count_all_zeroes, 6, test_input)
+test(count_all_zeroes, 10, ["R1000"])
+
+test(count_all_zeroes, 1, (["R50"]))
+test(count_all_zeroes, 10, (["R1000"]))
+test(count_all_zeroes, 1, (["R100"]))
+test(count_all_zeroes, 2, (["R150"]))
+test(count_all_zeroes, 1, (["L50"]))
+test(count_all_zeroes, 2, (["L150"]))
+test(count_all_zeroes, 2, (["L200"]))
+test(count_all_zeroes, 0, (["L0"]))
+test(count_all_zeroes, 0, (["R0"]))
+test(count_all_zeroes, 1, (["L49","L1"]))
+
+test(count_zeroes, 1007, input)
+test(count_all_zeroes, 5820, input)
