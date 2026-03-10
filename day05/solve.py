@@ -39,6 +39,9 @@ def count_in_ranges(ranges):
 def solve_part_2():
     return count_in_ranges(simplify_ranges(parse_input(read_input())[0]))
 
+print("Part 1:", solve_part_1())
+print("Part 2:", solve_part_2())
+
 
 # ==== Tests ====
 
@@ -70,6 +73,3 @@ test(count_in_ranges, 14, simplify_ranges(parse_input(_example)[0]))
 
 test(solve_part_1, 726)
 test(solve_part_2, 354226555270043)
-
-print("Part 1:", solve_part_1())
-print("Part 2:", solve_part_2())
