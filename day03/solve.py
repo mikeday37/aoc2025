@@ -16,6 +16,9 @@ def solve_for_battery_count(n):
 print("Part 1:", solve_for_battery_count(2))
 print("Part 2:", solve_for_battery_count(12))
 
+
+# ==== Tests ====
+
 test(pick_best_n_batteries, 98, 2, "987654321111111")
 test(pick_best_n_batteries, 89, 2, "811111111111119")
 test(pick_best_n_batteries, 78, 2, "234234234234278")
