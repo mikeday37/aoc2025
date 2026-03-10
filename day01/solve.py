@@ -26,14 +26,14 @@ def count_all_zeroes(turns):
         v = (v + amount) % 100
     return zeroes
 
-input = read_input().splitlines()
-print("part 1: ", count_zeroes(input))
-print("part 2: ", count_all_zeroes(input))
+_input = read_input().splitlines()
+print("part 1: ", count_zeroes(_input))
+print("part 2: ", count_all_zeroes(_input))
 
 
 # ==== Tests ====
 
-test_input = """\
+_example = """\
 L68
 L30
 R48
@@ -46,8 +46,8 @@ R14
 L82
 """.splitlines()
 
-test(count_zeroes, 3, test_input)
-test(count_all_zeroes, 6, test_input)
+test(count_zeroes, 3, _example)
+test(count_all_zeroes, 6, _example)
 test(count_all_zeroes, 10, ["R1000"])
 
 test(count_all_zeroes, 1, (["R50"]))
@@ -61,5 +61,5 @@ test(count_all_zeroes, 0, (["L0"]))
 test(count_all_zeroes, 0, (["R0"]))
 test(count_all_zeroes, 1, (["L49","L1"]))
 
-test(count_zeroes, 1007, input)
-test(count_all_zeroes, 5820, input)
+test(count_zeroes, 1007, _input)
+test(count_all_zeroes, 5820, _input)
