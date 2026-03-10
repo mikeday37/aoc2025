@@ -39,6 +39,9 @@ def count_in_ranges(ranges):
 def solve_part_2():
     return count_in_ranges(simplify_ranges(parse_input(read_input())[0]))
 
+
+# ==== Tests ====
+
 _example = """\
 3-5
 10-14

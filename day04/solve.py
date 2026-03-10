@@ -41,7 +41,8 @@ def solve_part_2():
 print("Part 1:", solve_part_1())
 print("Part 2:", solve_part_2())
 
-# --- tests ---
+
+# ==== Tests ====
 
 test(convert_to_roll_set, {(1,2)}, """\
 ..
