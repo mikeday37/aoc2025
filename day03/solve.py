@@ -31,5 +31,5 @@ test(pick_best_n_batteries, 434234234278, 12, "234234234234278")
 test(pick_best_n_batteries, 888911112111, 12, "818181911112111")
 test(pick_best_n_batteries, 999999999999, 12, "999999999999")
 
-test(solve_for_battery_count, 17383, 2)
-test(solve_for_battery_count, 172601598658203, 12)
+verify_known_answer(solve_for_battery_count, 17383, 2)
+verify_known_answer(solve_for_battery_count, 172601598658203, 12)

@@ -123,5 +123,5 @@ test(collect_circuits, {(1,2,3)}, [(1,2),(3,2)])
 test(solve_part_1, 40, 10, _example)
 test(solve_part_2, 25272, _example)
 
-test(solve_part_1, 67488, 1000, read_input())
-test(solve_part_2, 3767453340, read_input())
+verify_known_answer(solve_part_1, 67488, 1000, read_input())
+verify_known_answer(solve_part_2, 3767453340, read_input())

@@ -38,5 +38,6 @@ _example = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-16
 
 test(solve_part, 1227775554, _example, is_invalid_part_1)
 test(solve_part, 4174379265, _example, is_invalid_part_2)
-test(solve_part, 17077011375, _input, is_invalid_part_1)
-test(solve_part, 36037497037, _input, is_invalid_part_2)
+
+verify_known_answer(solve_part, 17077011375, _input, is_invalid_part_1)
+verify_known_answer(solve_part, 36037497037, _input, is_invalid_part_2)

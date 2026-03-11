@@ -61,5 +61,5 @@ test(count_all_zeroes, 0, (["L0"]))
 test(count_all_zeroes, 0, (["R0"]))
 test(count_all_zeroes, 1, (["L49","L1"]))
 
-test(count_zeroes, 1007, _input)
-test(count_all_zeroes, 5820, _input)
+verify_known_answer(count_zeroes, 1007, _input)
+verify_known_answer(count_all_zeroes, 5820, _input)

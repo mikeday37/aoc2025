@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import inspect
+import os
 
 def read_input():
     input_path = Path(sys.argv[0]).parent / "input.txt"
@@ -28,3 +29,14 @@ def test(function, expected_return_value, *args):
         suffix = f" at file \"{calling_filename}\", line {calling_linenumber}"
 
     print(f"TEST #{_test_counter}, {function.__name__}: {status}{suffix}")
+
+def verify_known_answer(function, known_answer, *args):
+    """
+    This function will do nothing unless the cwd of the process contains the file:
+        .enable_verify_known_answer
+
+    The known answers in my test cases are only valid for my input files.  The creator
+    of Advent of Code does not want people publishing puzzle inputs, and I respect that.
+    """
+    if os.path.exists(".enable_verify_known_answer"):
+        test(function, known_answer, *args)

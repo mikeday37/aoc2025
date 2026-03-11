@@ -71,5 +71,5 @@ test(count_in_ranges, 3, [(1,2), (3,3)])
 test(count_in_ranges, 10, [(1,2), (11,18)])
 test(count_in_ranges, 14, simplify_ranges(parse_input(_example)[0]))
 
-test(solve_part_1, 726)
-test(solve_part_2, 354226555270043)
+verify_known_answer(solve_part_1, 726)
+verify_known_answer(solve_part_2, 354226555270043)

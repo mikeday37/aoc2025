@@ -74,5 +74,5 @@ test(count_accessible_rolls, 13, _example_rolls)
 
 test(count_removable_rolls, 43, _example_rolls)
 
-test(solve_part_1, 1445)
-test(solve_part_2, 8317)
+verify_known_answer(solve_part_1, 1445)
+verify_known_answer(solve_part_2, 8317)

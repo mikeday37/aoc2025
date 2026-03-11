@@ -55,5 +55,5 @@ _example = """\
 test(solve_part, 4277556, _example)
 test(solve_part, 3263827, _example, True)
 
-test(solve_part, 4722948564882, read_input())
-test(solve_part, 9581313737063, read_input(), True)
+verify_known_answer(solve_part, 4722948564882, read_input())
+verify_known_answer(solve_part, 9581313737063, read_input(), True)

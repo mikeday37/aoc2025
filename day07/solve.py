@@ -111,5 +111,5 @@ test(count_timelines, 10, _example2)
 
 test(count_timelines, 40, _example)
 
-test(count_splits, 1553, read_input())
-test(count_timelines, 15811946526915, read_input())
+verify_known_answer(count_splits, 1553, read_input())
+verify_known_answer(count_timelines, 15811946526915, read_input())
