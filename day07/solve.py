@@ -52,3 +52,39 @@ test(count_splits, 21, _example)
 print("Part 1:", count_splits(read_input()))
 
 test(count_splits, 1553, read_input())
+
+def count_timelines(y, x, splitter_rows):
+    if y >= len(splitter_rows):
+        return 1
+    if x in splitter_rows[y]:
+        return count_timelines(y + 1, x - 1, splitter_rows) + count_timelines(y + 1, x + 1, splitter_rows)
+    else:
+        return count_timelines(y + 1, x, splitter_rows)
+    
+test(count_timelines, 40, 0, *parse_input(_example))
+test(count_timelines, 4, 0, *parse_input("""\
+ S 
+ ^ 
+^ ^"""))
+test(count_timelines, 3, 0, *parse_input("""\
+ S 
+ ^ 
+  ^"""))
+test(count_timelines, 5, 0, *parse_input("""\
+ S  
+ ^  
+  ^ 
+^  ^"""))
+test(count_timelines, 7, 0, *parse_input("""\
+ S  
+ ^  
+^ ^ 
+ ^ ^"""))
+
+
+#print("Part 2:", count_timelines(0, *parse_input(read_input()))) # === this is way too expensive - won't complete in reasonable time as-is
+
+    
+    
+
+
