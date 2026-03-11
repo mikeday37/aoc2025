@@ -6,7 +6,7 @@ from time import perf_counter
 def parse_input(input):
     return tuple(tuple(int(a) for a in line.split(',')) for line in input.splitlines())
 
-def find_n_closest_pairs(n, points):
+def find_pair_distances_sorted(points):
     pairs = []
     for a in range(0, len(points) - 1):
         for b in range(a + 1, len(points)):
@@ -14,9 +14,13 @@ def find_n_closest_pairs(n, points):
             dist = sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
             pairs.append((a, b, dist))
     pairs.sort(key = lambda x: x[2])
+    return pairs
+
+def find_n_closest_pairs(n, points):
+    pairs = find_pair_distances_sorted(points)
     return [(a,b) for (a,b,dist) in pairs][:n]
 
-def collect_circuits(pairs):
+def collect_circuits(pairs, breaker = None):
     last_circuit_id = 0
     circuits = defaultdict(set)
     point_to_circuit = dict()
@@ -48,6 +52,10 @@ def collect_circuits(pairs):
                 circuits[dest_id].add(p)
                 point_to_circuit[p] = dest_id
             del circuits[source_id]
+        if breaker is not None and breaker(circuits, point_to_circuit):
+            return (a, b)
+    # we should have broken before now if there was a breaker
+    assert(breaker is None)
     return set(tuple(sorted(point_set)) for point_set in circuits.values()) # easiest structure for test comparison
 
 def solve_part_1(top_n, input):
@@ -56,7 +64,19 @@ def solve_part_1(top_n, input):
     sizes.sort(reverse = True)
     return prod(sizes[:3])
 
+def solve_part_2(input):
+    points = parse_input(input)
+    pairs = [(a,b) for (a,b,dist) in find_pair_distances_sorted(points)]
+    def breaker(circuits, point_to_circuit):
+        return len(circuits) == 1 and len(point_to_circuit) == len(points)
+    a, b = collect_circuits(pairs, breaker)
+    return points[a][0] * points[b][0]
+
+start = perf_counter()
 print("Part 1:", solve_part_1(1000, read_input()))
+print("Part 2:", solve_part_2(read_input()))
+end = perf_counter()
+print("Duration:", end - start)
 
 
 # ==== Tests ====
@@ -101,4 +121,7 @@ test(collect_circuits, {(1,2,3,10,11,12,13)}, [(1,2),(2,3),(10,11),(12,13),(10,1
 test(collect_circuits, {(1,2,3)}, [(1,2),(3,2)])
 
 test(solve_part_1, 40, 10, _example)
+test(solve_part_2, 25272, _example)
+
 test(solve_part_1, 67488, 1000, read_input())
+test(solve_part_2, 3767453340, read_input())
