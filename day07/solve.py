@@ -6,43 +6,46 @@ def parse_input(input):
     splitter_rows = [[index for index, char in enumerate(line) if char == '^'] for line in lines[1:]]
     return start, splitter_rows
 
-def count_splits(input):
-    n = 0
-    start, splitter_rows = parse_input(input)
-    beams = {start}
-    for row in splitter_rows:
-        hits = [i for i in row if i in beams]
-        n += len(hits)
-        for i in hits:
-            beams.remove(i)
-            beams.add(i - 1)
-            beams.add(i + 1)
-    return n
-
-def count_timelines(input):
+def solve(input):
     start, splitter_rows = parse_input(input)
     beams = {start}
     beams_per_row = [beams.copy()]
+    unique_splitter_hits = 0
     for row in splitter_rows:
         hits = [i for i in row if i in beams]
+        unique_splitter_hits += len(hits)
         for i in hits:
             beams.remove(i)
             beams.add(i - 1)
             beams.add(i + 1)
         beams_per_row.append(beams.copy())
-    paths_per_position = dict.fromkeys(beams_per_row[-1], 1)
+    paths = dict.fromkeys(beams_per_row[-1], 1)
     for y in range(len(beams_per_row)-2, -1, -1):
-        next_paths_per_position = dict()
+        next_paths = dict()
         for x in beams_per_row[y]:
             if x in beams_per_row[y + 1]:
-                next_paths_per_position[x] = paths_per_position[x]
+                next_paths[x] = paths[x]
             else:
-                next_paths_per_position[x] = paths_per_position[x - 1] + paths_per_position[x + 1]
-        paths_per_position = next_paths_per_position
-    return paths_per_position[start]
+                next_paths[x] = paths[x - 1] + paths[x + 1]
+        paths = next_paths
+    return unique_splitter_hits, paths[start]
 
-print("Part 1:", count_splits(read_input()))
-print("Part 2:", count_timelines(read_input()))
+splits, timelines = solve(read_input())
+print("Part 1:", splits)
+print("Part 2:", timelines)
+
+
+# ==== Testing Aliases ====
+
+# the solutions were developed and tested separately,
+# then combind into one because of considerable code overlap,
+# so these testing aliases allowed the tests to be reused after refactoring
+
+def count_splits(input):
+    return solve(input)[0]
+
+def count_timelines(input):
+    return solve(input)[1]
 
 
 # ==== Tests ====
