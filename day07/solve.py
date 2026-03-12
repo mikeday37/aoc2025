@@ -6,8 +6,7 @@ def parse_input(input):
     splitter_rows = tuple(tuple(index for index, char in enumerate(line) if char == '^') for line in lines[1:])
     return start, splitter_rows
 
-def solve(input):
-    start, splitter_rows = parse_input(input)
+def solve(start, splitter_rows):
     beams = {start}
     beams_per_row = [beams.copy()]
     unique_splitter_hits = 0
@@ -30,7 +29,7 @@ def solve(input):
         paths = next_paths
     return unique_splitter_hits, paths[start]
 
-splits, timelines = solve(read_input())
+splits, timelines = solve(*parse_input(read_input()))
 print("Part 1:", splits)
 print("Part 2:", timelines)
 
@@ -42,10 +41,10 @@ print("Part 2:", timelines)
 # so these testing aliases allowed the tests to be reused after refactoring
 
 def count_splits(input):
-    return solve(input)[0]
+    return solve(*parse_input(input))[0]
 
 def count_timelines(input):
-    return solve(input)[1]
+    return solve(*parse_input(input))[1]
 
 
 # ==== Tests ====
@@ -136,20 +135,28 @@ verify_known_answer(count_timelines2, 15811946526915, 0, *parse_input(read_input
 print(count_timelines2.cache_info())
 
 
-# ==== Comparing the Two Approaches ====
+# ==== Comparing the Two Approaches - Runtime ====
 
 import timeit
 
-input = read_input()
-def count_timelines2_fresh(input):
+# read and parse in advance
+parsed_input = parse_input(read_input())
+
+# confirm non-recursive still works as expected without wrapper
+verify_known_answer(solve, (1553, 15811946526915), *parsed_input)
+
+def count_timelines2_fresh(parsed_input):
     # timing would be trivial and non-representative without clearing the cache before each test
     count_timelines2.cache_clear()
-    return count_timelines2(0, *parse_input(input))
+    return count_timelines2(0, *parsed_input)
+
+verify_known_answer(count_timelines2_fresh, 15811946526915, parsed_input)
+
 tries = 100
 print(f"-- Part 2 Timing (tries = {tries}) --")
-recursive_duration = timeit.timeit(lambda: count_timelines2_fresh(input), number=tries) / tries
-non_recursive_duration = timeit.timeit(lambda: count_timelines(input), number=tries) / tries
-print(f"Cached Recurisve Approach: {recursive_duration:.6f} seconds")
+recursive_duration = timeit.timeit(lambda: count_timelines2_fresh(parsed_input), number=tries) / tries
+non_recursive_duration = timeit.timeit(lambda: solve(*parsed_input), number=tries) / tries
+print(f"Cached Recursive Approach: {recursive_duration:.6f} seconds")
 print(f"Non-Recursive Approach: {non_recursive_duration:.6f} seconds")
 if recursive_duration > non_recursive_duration:
     print(f"Non-Recursive is faster by a factor of {recursive_duration/non_recursive_duration:.2f} x")
@@ -157,6 +164,30 @@ else:
     print(f"Recursive is faster by a factor of {non_recursive_duration/recursive_duration:.2f} x")
 
 # Results on my machine:
-#   With a fresh cache across 100 tries, non-recursive is consistently over 12 times faster.
-#   Keeping the cache across those tries, recursive is only 2 times faster.
-#   Separating the parsing out of the timing runs would yield a better comparison.
+#   Across 100 tries, starting with an empty cache each time,
+#   the non-recursive approach is consistently over 24 times faster.
+
+
+# ==== Comparing the Two Approaches - Memory ====
+
+import tracemalloc
+
+def benchmark_memory_usage(function, *args):
+    tracemalloc.start()
+    result = function(*args)
+    _, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    return peak / 1024**2 # convert to MB
+
+print("-- Part 2 Memory Usage --")
+recursive_usage = benchmark_memory_usage(count_timelines2_fresh, parsed_input)
+non_recursive_usage = benchmark_memory_usage(solve, *parsed_input)
+print(f"Cached Recursive Approach: {recursive_usage:.3f} MB")
+print(f"Non-Recursive Approach: {non_recursive_usage:.3f} MB")
+if recursive_usage > non_recursive_usage:
+    print(f"Non-Recursive uses {100*(1-non_recursive_usage/recursive_usage):.1f} % less memory")
+else:
+    print(f"Recursive uses {100*(1-recursive_usage/non_recursive_usage):.1f} % less memory")
+
+# Results on my machine:
+#   Starting from an empty cache, the non-recursive approach is 37 % more memory efficient.
