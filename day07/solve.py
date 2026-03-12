@@ -191,3 +191,5 @@ else:
 
 # Results on my machine:
 #   Starting from an empty cache, the non-recursive approach is 37 % more memory efficient.
+#   ...but it's unnecessarily including the unchanging, large splitter_rows tuple in that cache,
+#   so that is a potential area for improvement.
