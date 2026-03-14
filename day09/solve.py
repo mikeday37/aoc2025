@@ -132,18 +132,11 @@ def yield_polygon_scanlines(points: tuple[Point, ...]) -> Iterator[Scanline]:
     y_min, y_max = min(ys), max(ys)
     for y in range(y_min, y_max + 1):
         xs = list(yield_x_intersections(y, verticals))
+        assert(len(xs) % 2 == 0)
         xs.sort()
-        inside = False
         scanlines_here = []
-        i = -1
-        start_x = None
-        while i < len(xs) - 1:
-            i += 1
-            inside = not inside
-            if inside:
-                start_x = xs[i]
-            else:
-                scanlines_here.append((start_x, xs[i]))
+        for i in range(0, len(xs), 2):
+            scanlines_here.append((xs[i], xs[i + 1]))
         for a, b in merge_ranges_inclusive(scanlines_here, horizontals[y]):
             yield Scanline(a, b, y)
 
@@ -165,11 +158,12 @@ def solve_part_2(points):
 
 _input_parsed = parse_input(read_input())
 print("Part 1:", solve_part_1(_input_parsed))
+"""
 start = perf_counter()
 print("Part 2:", solve_part_2(_input_parsed))
 end = perf_counter()
 print(f"Part 2 Duration: {end - start:.6f} seconds")
-
+#"""
 
 # ==== Tests ==== 
 
