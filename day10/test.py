@@ -33,8 +33,19 @@ test(yield_combinations_test_helper, [
     ], 4)
 
 _parsed_example = parse_input(_example)
+_parsed_input = parse_input(read_input())
+
 test(choose_buttons, [1,3], *_parsed_example[0][0:2])
 test(solve_part_1, 7, _parsed_example)
 
-_parsed_input = parse_input(read_input())
+def configure_machine_test_helper(parsed_example_row):
+    _, buttons, joltages = parsed_example_row
+    return sum(configure_machine(buttons, joltages))
+
+test(configure_machine_test_helper, 10, _parsed_example[0])
+test(configure_machine_test_helper, 12, _parsed_example[1])
+test(configure_machine_test_helper, 11, _parsed_example[2])
+
 verify_known_answer(solve_part_1, 401, _parsed_input)
+verify_known_answer(solve_part_2, 15017, _parsed_input)
+
