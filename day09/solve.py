@@ -158,12 +158,15 @@ def solve_part_2(points):
 
 _input_parsed = parse_input(read_input())
 print("Part 1:", solve_part_1(_input_parsed))
-"""
-start = perf_counter()
-print("Part 2:", solve_part_2(_input_parsed))
-end = perf_counter()
-print(f"Part 2 Duration: {end - start:.6f} seconds")
-#"""
+do_long_part = True
+if (do_long_part):
+    start = perf_counter()
+    part_2_answer = solve_part_2(_input_parsed)
+    print("Part 2:", part_2_answer)
+    end = perf_counter()
+    print(f"Part 2 Duration: {end - start:.6f} seconds")
+    verify_known_answer(lambda: part_2_answer, 1539809693)
+
 
 # ==== Tests ==== 
 
@@ -178,8 +181,6 @@ _example = """\
 7,3"""
 
 _example_parsed = parse_input(_example)
-
-test(solve_part_1, 50, parse_input(_example))
 
 test(categorize_line, LineType.POINT, Point(0,0), Point(0,0))
 test(categorize_line, LineType.POINT, Point(1,2), Point(1,2))
@@ -239,8 +240,9 @@ test(check_outline_self_intersect, False, (
 ))
 
 test(solve_part_1, 50, parse_input(_example))
+test(solve_part_2, 24, parse_input(_example))
 
-verify_known_answer(solve_part_1, 4771508457, parse_input(read_input()))
+verify_known_answer(solve_part_1, 4771508457, _input_parsed)
 
 # confirm that the example and full input do not self-intersect (so we can simplify the logic)
 test(check_outline_self_intersect, False, _example_parsed)
