@@ -1,6 +1,6 @@
 from common import *
 from .solve import *
-from .example import _example, _example2
+from .example import _example, _example2, _modified_example2
 
 test(parse_input, {'a': ['b', 'c'], 'd': ['e']}, """\
     d: e
@@ -66,6 +66,8 @@ test(is_double_reversible, True, _parsed_input)
 
 test(solve_part_1, 5, _parsed_example)
 test(solve_part_2, 2, _parsed_example2)
+
+test(solve_part_2, 0, parse_input(_modified_example2))
 
 verify_known_answer(solve_part_1, 688, _parsed_input)
 verify_known_answer(count_paths_backward, 688, "you", _parsed_input)

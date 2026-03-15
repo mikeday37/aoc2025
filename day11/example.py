@@ -24,3 +24,18 @@ dac: fff
 fff: ggg hhh
 ggg: out
 hhh: out"""
+
+_modified_example2 = """\
+svr: aaa bbb
+aaa: fft
+fft: ddd
+bbb: tty
+tty: ccc
+ccc: eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out"""
